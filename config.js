@@ -1,8 +1,8 @@
 // vim: filetype=javascript
 var cfg = {};
 
-cfg.listen = '127.0.0.1';
-cfg.port = 8001;
+cfg.listen = '0.0.0.0';
+cfg.port = 80;
 
 // internationalization options
 cfg.locales = {
