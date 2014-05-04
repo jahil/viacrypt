@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>ViaCRYPT</title>
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no">
+
+<meta property="og:image" content="http://viacry.pt/img/logo-big.jpg">
+<meta property='og:type' content='website'>
+<meta property="og:url" content="http://viacry.pt/">
+<meta property="og:site_name" content="ViaCRYPT">
+<meta property="og:title" content="ViaCRYPT">
+<meta property="og:description" content="Este aplicativo é um sistema de mensagens criptografadas onde o destinatário pode ler a mensagem apenas uma vez. Após a leitura, a mensagem é apagada e não pode mais ser recuperada. Nunca mais compartilhe suas senhas e segredos em claro por e-mail, Facebook Chat, Google Talk ou Skype.">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<link href="lib/css/bootstrap-combined.min.css" rel="stylesheet">
+<link href="vialink.css" rel="stylesheet">
+
+<!-- IOS startup image -->
+<link rel="apple-touch-startup-image" href="img/logo-big.jpg">
+
+<!-- Favicons-->
+<link rel="apple-touch-icon" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon" type="image/x-icon" href="ico/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon"  type="image/x-icon" href="ico/favicon.png">
+<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="ico/favicon.ico"><![endif]-->
+<!-- or, set /ico/favicon.ico for IE10 win -->
+<meta name="msapplication-TileColor" content="#fff" />
+<meta name="msapplication-TileImage" content="ico/tileicon.png" /><!--144x144px -->
+
+<!--[if !IE 7]>
+	<style type="text/css">
+		#wrap {display:table;height:100%}
+	</style>
+<![endif]-->
+
+<script src="lib/aes.js"></script>
+<script src="lib/jquery-1.10.2.min.js"></script>
+<script src="lib/touchscroll.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+<script src="viacrypt.js"></script>
+
+
+
+<script>
+	// Prevents error if Google Analytics is disabled.
+	ga = function() {}
+</script>
+
+
+</head>
+
+<a href="https://github.com/vialink/viacrypt" target="_blank" onclick="ga('send', 'event', 'github', 'click', 'banner');"><img id="git-ribbon" style="position: absolute; top: 0; right: 0; border: 0; z-index: 1031" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+<div class="container">
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<a class="brand" href="/" title="ViaCRYPT">ViaCRYPT</a>
+            <div id="topmenu">
+                <ul class="nav pull-right-nav">
+                    <li><a href="#whatIsIt" role="button" data-toggle="modal" onclick="ga('send', 'event', 'what it is', 'click', 'modal', 1);">
+                        <span class="menu-hover menu-hover-top"></span>
+                        O que é e como funciona?
+                        <span class="menu-hover"></span>
+                    </a></li>
+                    <li><a href="#examplesOfUse" role="button" data-toggle="modal" onclick="ga('send', 'event', 'examples', 'click', 'modal', 1);">
+                        <span class="menu-hover menu-hover-top"></span>
+                        Exemplos de uso
+                        <span class="menu-hover"></span>
+                    </a></li>
+                    <li><a href="#forNerds" role="button" data-toggle="modal" onclick="ga('send', 'event', 'for nerds', 'click', 'modal', 1);">
+                        <span class="menu-hover menu-hover-top"></span>
+                        Explicação para nerds
+                        <span class="menu-hover"></span>
+                    </a></li>
+                    <li><a href="#contactUs" role="button" data-toggle="modal" onclick="ga('send', 'event', 'contact us', 'click', 'modal', 1);">
+                        <span class="menu-hover menu-hover-top"></span>
+                        Entre em contato
+                        <span class="menu-hover"></span>
+                    </a></li>
+                </ul>
+            </div>
+		</div>
+	</div>
+	<div class="form-horizontal">
+		<div class="control-group">
+			<textarea id="message" style="background-color: rgba(255, 255, 255, 0.4); font-size: 16px; font-family: monospace; width: 100%; box-sizing: border-box;" class="input-xxlarge" rows="20" placeholder="Digite sua mensagem secreta aqui..."></textarea>
+		</div>
+        
+		<div class="control-group">
+			<button id="save" type="button" class="btn btn-primary" onclick="ga('send', 'event', 'save it', 'click', 'generate url', 1);">Salvar</button>
+		</div>
+	</div>
+	<div id="showUrl" class="well hide">
+		<p>URL de uso único: <span class="url"></span></p>
+		<p><span class="label label-important">IMPORTANTE</span> Essa mensagem pode ser lida apenas uma vez e será apagada depois da primeira leitura.</p>
+	</div>
+
+    <div id="iosmenu">
+    </div>
+
+	<div id="footer">
+		<div class="container">
+			<div class="desenv">
+				<span>Desenvolvido por</span> <a href="http://www.vialink.com.br" target="_blank" title="Vialink" class="logo-vialink" onclick="ga('send', 'event', 'vialink', 'click', 'footer');">VIALINK</a>
+			</div>
+            <div class="locale">
+                <ul>
+                    
+                    <li> <a href="/en/"><img src="img/flags/en.png"></a></li>
+                    
+                    <li> <a href="/br/"><img src="img/flags/br.png"></a></li>
+                    
+                </ul>
+            </div>
+		</div>
+    </div>
+</div>
+
+<div id="whatIsIt" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>O que é e como funciona?</h3>
+	</div>
+	<div class="modal-body" id="whatIsItText">
+		<p>Este aplicativo é um sistema de mensagens criptografadas onde o destinatário pode ler a mensagem apenas uma vez. Após a leitura, a mensagem é apagada e não pode mais ser recuperada.</p>
+		<p>A mensagem é criptografada em seu navegador e armazenada nos nossos servidores. A chave para decifrar a mensagem está dentro da URL gerada e ninguém, além de você e o destinatário tem ela. Assim, é impossível para qualquer pessoa, mesmo nós ou qualquer governo ler o conteúdo de sua mensagem.</p>
+		<p>O sistema de criptografia é tão forte que todos os computadores do mundo juntos levariam muito mais de um trilhão de anos para quebrá-la. Você pode ter mais informações sobre isso <a href="http://www.eetimes.com/document.asp?doc_id=1279619" target="_blank">aqui</a>.</p>
+		<p>Você pode verificar o código por conta própria, esteja você curioso ou simplesmente queira executá-lo em casa, ele está disponível em <a href="https://github.com/vialink/viacrypt" target="_blank" onclick="ga('send', 'event', 'github', 'click', 'what it is');">Github</a>.</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>
+
+<div id="examplesOfUse" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Exemplos de uso</h3>
+	</div>
+	<div class="modal-body" id="examplesOfUseText">
+		<ol>
+			<li>Ao enviar alguma senha para alguém, é mais seguro gerar uma mensagem criptografada e enviar apenas a URL. Assim, se você enviar por e-mail e alguém, no futuro, tiver acesso ao e-mail, o invasor não terá a senha. Ou então, se você enviá-la através GTalk, Facebook Chat ou Skype, a senha não é armazenada em seus bancos de dados.</li>
+			<li>Você pode criar uma mensagem com uma única palavra e enviar a URL para muitos amigos. O primeiro a abrir a mensagem obtém a palavra e ganha algum prêmio.</li>
+		</ol>
+		<strong>Seja criativo!</strong> Você pode usar de muitas maneiras. Não se esqueca de nos contar como você está usando :)
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	</div>
+</div>
+
+<div id="forNerds" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Para nerds...</h3>
+	</div>
+	<div class="modal-body" id="forNerdsText">
+		<p>A mensagem é criptografada usando AES e tem uma chave de 256 bits como senha. A senha é gerada aleatoriamente no seu navegador, em seguida, a mensagem é criptografada e armazenada em nossos servidores através de um identificador único. A URL gerada é composto de duas partes: o identificador único e a chave aleatória. Ambos estão no fragmento da URL e não são enviados para o nosso servidor quando a URL é aberta.</p>
+		<p>Quando a URL gerada é aberta, um código javascript analisa a URL e recuperar a mensagem por seu identificador único. Os servidores retornam a mensagem e a apagam de uma só vez. Então, a mensagem é decodificada em seu navegador usando a chave e é apresentada a você. Se você tentar abrir a mesma mensagem novamente, nossos servidores irão retornar um código de status 404 porque a mensagem não existe mais.</p>
+		<p>Pode-se argumentar que alguém pode recuperar a sua mensagem e torná-la indisponível para você. Embora isso seja possível, os identificadores únicos são gerados aleatoriamente usando a RFC4122 UUID v4 e a probabilidade de colisão ao acaso é de cerca de 8.64E-78.</p>
+		<p>Você pode verificar o código por conta própria, esteja você curioso ou simplesmente queira executá-lo em casa, ele está disponível em <a href="https://github.com/vialink/viacrypt" target="_blank" onclick="ga('send', 'event', 'github', 'click', 'for nerds');">Github</a>.</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	</div>
+</div>
+
+<div id="messageModal" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Sua mensagem é…</h3>
+	</div>
+	<div class="modal-body" id="messageText">
+		<pre class="message"></pre>
+        <span class="label label-important">LEMBRE-SE</span> Essa mensagem foi deletada e não pode ser lida novamente.
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>
+
+<div id="messageNotFound" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Mensagem não encontrada</h3>
+	</div>
+	<div class="modal-body" id="messageNotFoundText">
+		<p>Essa mensagem já foi lida ou nunca existiu.</p>
+		<p>Você deve pedir ao remetente para enviá-la novamente.</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>
+
+<div id="messageBox" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3></h3>
+	</div>
+	<div class="modal-body" id="messageBoxText"></div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>
+
+<div id="contactUs" class="modal hide fade" tabindex="-1" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Informações de contato</h3>
+	</div>
+	<div class="modal-body" id="contactUsText">
+		<p>Você pode nos contactar por e-mail <a href="&#109;&#97;&#105;l&#116;&#111;&#58;&#118;&#105;&#97;&#99;&#114;&#121;&#112;t&#64;&#118;ialin&#107;&#46;c&#111;&#109;.b&#114;" onclick="ga('send', 'event', 'send mail', 'click', 'contact us');">&#118;iac&#114;&#121;&#112;&#116;&#64;&#118;ial&#105;&#110;k.co&#109;.&#98;r</a>.</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+	</div>
+</div>
+
+</body>
+</html>
